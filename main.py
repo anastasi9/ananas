@@ -7,6 +7,7 @@ SIZE = 50
 x, y = randrange(0, RES - SIZE, SIZE), randrange(0, RES - SIZE, SIZE)
 ananas = randrange(0, RES - SIZE, SIZE), randrange(0, RES - SIZE, SIZE)
 lenght = 1
+dirs = {'W': True, 'S': True, 'A': True, 'D': True, }
 snake = [(x, y)]
 dx, dy = 0, 0
 fps = 5
@@ -28,8 +29,15 @@ while True:
     # eating ananas
     if snake[-1] == ananas:
         ananas = randrange(0, RES, SIZE), randrange(0, RES, SIZE)
-        lenght == 1
-        fps == 1
+        lenght += 1
+        fps += 1
+
+    # game over
+    if x < 0 or x > RES - SIZE or y < 0 or y > RES - SIZE:
+        break
+    if len(snake) != len(set(snake)):
+        break
+
 
 
     pygame.display.flip()
@@ -41,11 +49,15 @@ while True:
 
     # control
     key = pygame.key.get_pressed()
-    if key[pygame.K_w]:
+    if key[pygame.K_w] and dirs['W']:
         dx, dy = 0, -1
-    if key[pygame.K_s]:
+        dirs = {'W': True, 'S': False, 'A': True, 'D': True, }
+    if key[pygame.K_s] and dirs['S']:
         dx, dy = 0, 1
-    if key[pygame.K_a]:
+        dirs = {'W': False, 'S': True, 'A': True, 'D': True,}
+    if key[pygame.K_a] and dirs['A']:
         dx, dy = -1, 0
-    if key[pygame.K_d]:
+        dirs = {'W': True, 'S': True, 'A': True, 'D': False,}
+    if key[pygame.K_d] and dirs['D']:
         dx, dy = 1, 0
+        dirs = {'W': True, 'S': True, 'A': False, 'D': True,}
