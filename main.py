@@ -18,11 +18,11 @@ sc = pygame.display.set_mode([RES, RES])
 clock = pygame.time.Clock()
 font_score = pygame.font.SysFont('Arial', 26, bold=True)
 font_end = pygame.font.SysFont('Arial', 66, bold=True)
-
+img = pygame.image.load('green.jpg').convert()
 while True:
-    sc.fill(pygame.Color('green'))
+    sc.blit(img, (0, 0))
     # drawing snake
-    [(pygame.draw.rect(sc, pygame.Color('yellow'), (i, j, SIZE, SIZE))) for i, j in snake]
+    [(pygame.draw.rect(sc, pygame.Color('yellow'), (i, j, SIZE - 2, SIZE - 2))) for i, j in snake]
     pygame.draw.rect(sc, pygame.Color('red'), (*ananas, SIZE, SIZE))
     # show score
     render_score = font_score.render(f'SCORE: {score}', 1, pygame.Color('orange'))
