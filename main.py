@@ -1,8 +1,10 @@
 import pygame
 from random import randrange
 
-RES = 800
-SIZE = 50
+RES = 500
+SIZE = 25
+
+pygame.display.set_caption('Змеюшка')
 
 x, y = randrange(0, RES - SIZE, SIZE), randrange(0, RES - SIZE, SIZE)
 ananas = randrange(0, RES - SIZE, SIZE), randrange(0, RES - SIZE, SIZE)
@@ -18,26 +20,38 @@ sc = pygame.display.set_mode([RES, RES])
 clock = pygame.time.Clock()
 font_score = pygame.font.SysFont('Arial', 26, bold=True)
 font_end = pygame.font.SysFont('Arial', 66, bold=True)
+
 img = pygame.image.load('green.jpg').convert()
+
+sound_backroud = pygame.mixer.Sound('nature.mp3')
+pygame.mixer.music.load('nature.mp3')
+pygame.mixer.music.play(-1)
+
 while True:
     sc.blit(img, (0, 0))
-    # drawing snake
+    # drawing snake вид змейки
     [(pygame.draw.rect(sc, pygame.Color('yellow'), (i, j, SIZE - 2, SIZE - 2))) for i, j in snake]
     pygame.draw.rect(sc, pygame.Color('red'), (*ananas, SIZE, SIZE))
-    # show score
+    # show score очки
     render_score = font_score.render(f'SCORE: {score}', 1, pygame.Color('orange'))
     sc.blit(render_score, (5, 5))
-    # snake movement
+    # snake movement движения змейки
     x += dx * SIZE
     y += dy * SIZE
     snake.append((x, y))
     snake = snake[-lenght:]
     # eating ananas
     if snake[-1] == ananas:
-        ananas = randrange(0, RES, SIZE), randrange(0, RES, SIZE)
+        ananas = randrange(0, RES, SIZE), randrange(0, RES, SIZE) 
         lenght += 1
         score += 1
         fps += 1
+        sound_eat = pygame.mixer.Sound('nyam.mp3')
+        pygame.mixer.music.load('nyam.mp3')
+        sound_eat.play()
+        music = pygame.mixer.music.load('nature.mp3')
+        pygame.mixer.music.play(-1)
+           
     # game over
     if x < 0 or x > RES - SIZE or y < 0 or y > RES - SIZE or len(snake) != len(set(snake)):
         while True:
