@@ -4,7 +4,7 @@ from random import randrange
 RES = 500
 SIZE = 25
 
-pygame.display.set_caption('Змеюшка')
+pygame.display.set_caption('Космонавтики')
 
 x, y = randrange(0, RES - SIZE, SIZE), randrange(0, RES - SIZE, SIZE)
 ananas = randrange(0, RES - SIZE, SIZE), randrange(0, RES - SIZE, SIZE)
