@@ -111,6 +111,10 @@ while True:
         if x < 0 or x > RES - SIZE or y < 0 or y > RES - SIZE or len(snake) != len(set(snake)):
             game_over = True
             paused = False
+
+            sound_game_over = pygame.mixer.Sound('game_over.mp3')
+            pygame.mixer.music.load('game_over.mp3')
+            sound_game_over.play()
     
     # show "PAUSED" text if game is paused
     if paused:
@@ -141,6 +145,7 @@ while True:
                 fps = 5
                 paused = False
                 game_over = False
+                
                 pygame.mixer.music.load('nature.mp3')
                 pygame.mixer.music.play(-1)
             # проверяем попадание курсора по кнопке выход
