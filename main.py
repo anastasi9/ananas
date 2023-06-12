@@ -14,6 +14,7 @@ snake = [(x, y)]
 dx, dy = 0, 0
 score = 0 
 fps = 5
+paused = False
 
 pygame.init()
 sc = pygame.display.set_mode([RES, RES])
@@ -36,10 +37,11 @@ while True:
     render_score = font_score.render(f'SCORE: {score}', 1, pygame.Color('orange'))
     sc.blit(render_score, (5, 5))
     # snake movement движения змейки
-    x += dx * SIZE
-    y += dy * SIZE
-    snake.append((x, y))
-    snake = snake[-lenght:]
+    if not paused:
+        x += dx * SIZE
+        y += dy * SIZE
+        snake.append((x, y))
+        snake = snake[-lenght:]
     # eating ananas
     if snake[-1] == ananas:
         ananas = randrange(0, RES, SIZE), randrange(0, RES, SIZE) 
@@ -56,24 +58,32 @@ while True:
     if x < 0 or x > RES - SIZE or y < 0 or y > RES - SIZE or len(snake) != len(set(snake)):
         while True:
             render_end = font_end.render('GAME OVER', 1, pygame.Color('orange'))
-            sc.blit(render_end, (RES // 2 - 200, RES // 3))
+            sc.blit(render_end, (RES // 3 - 100, RES // 3))
             pygame.display.flip()
             for event in pygame.event.get():
                  if event.type == pygame.QUIT:
                      exit()
     
+    # show "PAUSED" text if game is paused
+    if paused:
+        render_paused = font_end.render('PAUSED', 1, pygame.Color('orange'))
+        sc.blit(render_paused, (RES // 2 - 100, RES // 3))
+
     pygame.display.flip()
     clock.tick(fps)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
+        # toggle pause on 'p' key press
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+            paused = not paused
 
     # control
     key = pygame.key.get_pressed()
     if key[pygame.K_w] and dirs['W']:
         dx, dy = 0, -1
-        dirs = {'W': True, 'S': False, 'A': True, 'D': True, }
+        dirs = {'W': True, 'S': False, 'A': True, 'D': True,}
     if key[pygame.K_s] and dirs['S']:
         dx, dy = 0, 1
         dirs = {'W': False, 'S': True, 'A': True, 'D': True,}
