@@ -59,6 +59,7 @@ exit_text = font_score.render('Выйти', 1, pygame.Color('white'))
 
 while True:
     sc.blit(img, (0, 0))
+
     # отображение меню при game_over
     if game_over:
         pygame.draw.rect(sc, pygame.Color('white'), (RES // 4, RES // 4, RES // 2, RES // 2))
@@ -118,8 +119,8 @@ while True:
     
     # show "PAUSED" text if game is paused
     if paused:
-        render_paused = font_end.render('PAUSED', 1, pygame.Color('orange'))
-        sc.blit(render_paused, (RES // 2 - 100, RES // 3))
+        render_paused = font_end.render('ждём', 1, pygame.Color('white'))
+        sc.blit(render_paused, (RES // 2.8, RES // 2.8))
 
     pygame.display.flip()
     clock.tick(fps)
@@ -148,6 +149,7 @@ while True:
                 
                 pygame.mixer.music.load('nature.mp3')
                 pygame.mixer.music.play(-1)
+                
             # проверяем попадание курсора по кнопке выход
             if exit_button.collidepoint(mouse_pos):
                 exit() 
